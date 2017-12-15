@@ -26,5 +26,5 @@ events.on("exec", async (brigadeEvent, project) => {
 });
 
 events.on("push", async (brigadeEvent, project) => {
-  pipeline();
+  console.log("Done running")
 });
