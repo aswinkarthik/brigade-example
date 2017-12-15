@@ -1,0 +1,16 @@
+{
+  "name": "brigade-example",
+  "version": "1.0.0",
+  "description": "A test application with source and test",
+  "main": "index.js",
+  "repository": "https://github.com/aswinkarthik93/brigade-example.git",
+  "author": "aswinks",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
