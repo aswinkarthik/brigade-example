@@ -1,30 +1,33 @@
 const { events, Job, Group } = require('brigadier');
 
-const pipeline = () => {
-  const testJob = new Job("test", "node:latest");
-  testJob.tasks = [
-    "cd /src/",
-    "yarn install",
-    "yarn test"
-  ];
+const createJob = ({id, name, image, tasks}) => {
+  let job = new Job(`${name}-${id}`, image);
+  job.tasks = tasks;
+  return job;
+};
 
-  const deployJob = new Job("deploy", "alpine:latest");
+const run = async () => {
+  let group = new Group();
+  group.add(createJob({
+    id: 1,
+    name: 'test-node',
+    image: 'node:latest',
+    tasks: [
+      'cd /src/',
+      'yarn install',
+      'yarn test'
+    ]
+  }));
 
-  deployJob.tasks = [
-    'echo Deploy Job running'
-  ];
-  Group
-    .runAll([ testJob, testJob, testJob ])
-    .then(() => {
-      deployJob.run();
-    });
+  await group.runAll();
 };
 
 events.on("exec", async (brigadeEvent, project) => {
-  pipeline();
+  run();
   console.log("Done running")
 });
 
 events.on("push", async (brigadeEvent, project) => {
+  run();
   console.log("Done running")
 });
